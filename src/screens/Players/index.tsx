@@ -15,6 +15,8 @@ import { PlayerAddByGroup } from "storage/player/playerAddByGroup";
 import { playersGetByGroupAndTeam } from "storage/player/playerGetByGroupAndTeam";
 import { PlayerStorageDTO } from "storage/player/PlayerStorageDTO";
 import { useEffect } from "react";
+import { useRef } from "react";
+import { TextInput } from "react-native";
 
 type RouteParams = {
   group: string;
@@ -27,6 +29,8 @@ export function Players() {
 
   const route = useRoute();
   const { group } = route.params as RouteParams;
+
+  const newPlayerNameInputRef = useRef<TextInput>(null);
 
   async function handleAddPlayer() {
     if (newPlayerName.trim().length === 0) {
@@ -43,6 +47,10 @@ export function Players() {
 
     try {
       await PlayerAddByGroup(newPlayer, group);
+
+      newPlayerNameInputRef.current?.blur();
+
+      setNewPlayerName("");
       fetchPlayersByTeam();
     } catch (error) {
       if (error instanceof AppError) {
@@ -74,9 +82,13 @@ export function Players() {
       <Highlight title={group} subtitle="adicione a galera e separe os times" />
       <Form>
         <Input
+          inputRef={newPlayerNameInputRef}
           placeholder="Nome da pessoa"
           autoCorrect={false}
+          value={newPlayerName}
           onChangeText={setNewPlayerName}
+          onSubmitEditing={handleAddPlayer}
+          returnKeyType="done"
         />
         <ButtonIcon icon="add" onPress={handleAddPlayer} />
       </Form>
