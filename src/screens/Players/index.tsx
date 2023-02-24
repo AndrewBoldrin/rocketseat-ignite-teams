@@ -11,7 +11,7 @@ import { ListEmpty } from "components/ListEmpty";
 import { Button } from "components/Button";
 import { Container, Form, HeaderList, NumberOfPlayers } from "./styles";
 import { AppError } from "utils/AppError";
-import { PlayerAddByGroup } from "storage/player/playerAddByGroup";
+import { playerAddByGroup } from "storage/player/playerAddByGroup";
 import { playersGetByGroupAndTeam } from "storage/player/playerGetByGroupAndTeam";
 import { PlayerStorageDTO } from "storage/player/PlayerStorageDTO";
 import { useEffect } from "react";
@@ -51,7 +51,7 @@ export function Players() {
     };
 
     try {
-      await PlayerAddByGroup(newPlayer, group);
+      await playerAddByGroup(newPlayer, group);
 
       newPlayerNameInputRef.current?.blur();
 

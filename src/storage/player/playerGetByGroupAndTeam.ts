@@ -1,4 +1,4 @@
-import { playersGetByGroup } from "./PlayersGetByGroup";
+import { playersGetByGroup } from "./playersGetByGroup";
 
 export async function playersGetByGroupAndTeam(group: string, team: string) {
   try {
